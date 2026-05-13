@@ -1,0 +1,20 @@
+using Bovix_Platform.RanchManagement.Domain.Model.Commands;
+using Bovix_Platform.RanchManagement.Interfaces.REST.Resources;
+
+namespace Bovix_Platform.RanchManagement.Interfaces.REST.Transform;
+
+public class UpdateVaccineCommandFromResourceAssembler
+{
+    public static UpdateVaccineCommand ToCommandFromResource(int id, UpdateVaccineResource resource)
+    {
+        return new UpdateVaccineCommand
+        (
+            Id: id,
+            Name: resource.Name,
+            VaccineType: resource.VaccineType,
+            VaccineDate: resource.VaccineDate,
+            BovineId: resource.BovineId,
+            fileData: resource?.fileData?.OpenReadStream() ?? null
+        );
+    }
+}

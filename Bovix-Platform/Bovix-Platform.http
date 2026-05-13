@@ -1,0 +1,6 @@
+@Bovix_Platform_HostAddress = http://localhost:5160
+
+GET {{Bovix_Platform_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
