@@ -76,7 +76,7 @@ var dbDatabase = Environment.GetEnvironmentVariable("DB_DATABASE");
 var dbUser = Environment.GetEnvironmentVariable("DB_USER");
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-var connectionString = $"server={dbServer};database={dbDatabase};user={dbUser};password={dbPassword};";
+var connectionString = $"server={dbServer};database={dbDatabase};user={dbUser};password={dbPassword};SslMode=Required;";
 
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
