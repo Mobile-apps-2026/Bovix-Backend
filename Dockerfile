@@ -1,5 +1,5 @@
 ﻿# Etapa 1: Construcción
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copiamos el archivo de proyecto apuntando a la subcarpeta
