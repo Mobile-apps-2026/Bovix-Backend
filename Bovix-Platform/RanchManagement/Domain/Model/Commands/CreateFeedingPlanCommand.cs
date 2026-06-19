@@ -4,4 +4,5 @@ public record CreateFeedingPlanCommand(
     string Lot,
     decimal DailyRationKg,
     int AnimalCount,
-    string? Notes);
+    string? Notes,
+    int UserId = 0);

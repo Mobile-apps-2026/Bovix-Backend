@@ -5,4 +5,5 @@ public record CreateAppointmentCommand(
     DateTime ScheduledAt,
     string? Lot,
     string? Status,
-    string? Notes);
+    string? Notes,
+    int UserId = 0);

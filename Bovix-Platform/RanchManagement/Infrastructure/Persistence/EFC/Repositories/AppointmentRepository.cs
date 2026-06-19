@@ -17,4 +17,18 @@ public class AppointmentRepository(AppDbContext ctx)
             .OrderBy(a => a.ScheduledAt)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<Appointment>> FindByUserIdAsync(int userId)
+    {
+        return await Context.Set<Appointment>().Where(a => a.UserId == userId).ToListAsync();
+    }
+
+    public async Task<Appointment?> FindNextByUserIdAsync(int userId)
+    {
+        var now = DateTime.UtcNow;
+        return await Context.Set<Appointment>()
+            .Where(a => a.UserId == userId && a.ScheduledAt >= now && a.Status == "SCHEDULED")
+            .OrderBy(a => a.ScheduledAt)
+            .FirstOrDefaultAsync();
+    }
 }

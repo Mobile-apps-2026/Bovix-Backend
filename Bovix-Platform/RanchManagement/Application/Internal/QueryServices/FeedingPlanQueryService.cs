@@ -8,7 +8,7 @@ namespace Bovix_Platform.RanchManagement.Application.Internal.QueryServices;
 public class FeedingPlanQueryService(IFeedingPlanRepository repository) : IFeedingPlanQueryService
 {
     public async Task<IEnumerable<FeedingPlan>> Handle(GetAllFeedingPlansQuery query) =>
-        await repository.ListWithComponentsAsync();
+        await repository.ListWithComponentsByUserIdAsync(query.UserId);
 
     public async Task<FeedingPlan?> Handle(GetFeedingPlanByIdQuery query) =>
         await repository.FindByIdWithComponentsAsync(query.Id);

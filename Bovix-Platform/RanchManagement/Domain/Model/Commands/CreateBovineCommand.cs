@@ -11,4 +11,5 @@ public record CreateBovineCommand(
     int WeightKg,
     string? BovineImg,
     int? StableId,
-    Stream? fileData);
+    Stream? fileData,
+    int UserId = 0);

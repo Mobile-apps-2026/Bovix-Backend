@@ -27,9 +27,10 @@ public class HomeSummaryController(
     {
         var currentUser = HttpContext.Items["User"] as User;
         var userName = currentUser?.Username ?? "Usuario";
+        var userId = currentUser?.Id ?? 0;
 
-        var bovines = (await bovineQueryService.Handle(new GetAllBovinesQuery())).ToList();
-        var appointments = (await appointmentQueryService.Handle(new GetAllAppointmentsQuery())).ToList();
+        var bovines = (await bovineQueryService.Handle(new GetAllBovinesQuery(userId))).ToList();
+        var appointments = (await appointmentQueryService.Handle(new GetAllAppointmentsQuery(userId))).ToList();
         var vaccines = (await vaccineQueryService.Handle(new GetAllVaccinesQuery())).ToList();
 
         var totalAnimals = bovines.Count;

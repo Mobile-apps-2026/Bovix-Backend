@@ -14,7 +14,7 @@ public class BovineQueryService(IBovineRepository bovineRepository) : IBovineQue
     /// <returns></returns>
     public async Task<IEnumerable<Bovine>> Handle(GetAllBovinesQuery query)
     {
-        return await bovineRepository.ListAsync();
+        return await bovineRepository.FindByUserIdAsync(query.UserId);
     }
     
     /// <summary>

@@ -21,6 +21,8 @@ public class FeedingPlan
     [StringLength(300)]
     public string? Notes { get; private set; }
 
+    public int UserId { get; private set; }
+
     public List<FeedingComponent> Components { get; private set; } = new();
 
     private FeedingPlan() { }
@@ -31,6 +33,7 @@ public class FeedingPlan
         DailyRationKg = command.DailyRationKg;
         AnimalCount = command.AnimalCount;
         Notes = command.Notes;
+        UserId = command.UserId;
     }
 
     public void Update(UpdateFeedingPlanCommand command)

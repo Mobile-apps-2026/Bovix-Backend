@@ -28,6 +28,8 @@ public class Appointment
     [StringLength(500)]
     public string? Notes { get; private set; }
 
+    public int UserId { get; private set; }
+
     private Appointment() { }
 
     public Appointment(CreateAppointmentCommand command)
@@ -37,6 +39,7 @@ public class Appointment
         Lot = command.Lot;
         Status = NormalizeStatus(command.Status);
         Notes = command.Notes;
+        UserId = command.UserId;
     }
 
     public void Update(UpdateAppointmentCommand command)

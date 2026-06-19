@@ -30,6 +30,14 @@ public class FeedingPlanRepository(AppDbContext ctx)
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<FeedingPlan>> ListWithComponentsByUserIdAsync(int userId)
+    {
+        return await Context.Set<FeedingPlan>()
+            .Where(p => p.UserId == userId)
+            .Include(p => p.Components)
+            .ToListAsync();
+    }
+
     public async Task AddComponentAsync(FeedingComponent component)
     {
         await Context.Set<FeedingComponent>().AddAsync(component);

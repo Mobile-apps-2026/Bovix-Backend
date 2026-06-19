@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Bovix_Platform.IAM.Domain.Model.Aggregates;
 using Bovix_Platform.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using Bovix_Platform.RanchManagement.Domain.Model.Commands;
 using Bovix_Platform.RanchManagement.Domain.Model.Queries;
@@ -21,6 +22,8 @@ namespace Bovix_Platform.RanchManagement.Interfaces.REST;
 public class BovineController(IBovineCommandService commandService,
     IBovineQueryService queryService) : ControllerBase
 {
+    private int CurrentUserId => ((User)HttpContext.Items["User"]!).Id;
+
     /// <summary>
     /// Posts a new bovine to the system.
     /// </summary>
@@ -30,7 +33,7 @@ public class BovineController(IBovineCommandService commandService,
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> CreateBovines([FromForm] CreateBovineResource resource)
     {
-        var command = CreateBovineCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var command = CreateBovineCommandFromResourceAssembler.ToCommandFromResource(resource) with { UserId = CurrentUserId };
         var result = await commandService.Handle(command);
         if (result is null) return BadRequest();
 
@@ -50,7 +53,7 @@ public class BovineController(IBovineCommandService commandService,
     [SwaggerResponse(StatusCodes.Status200OK, "The list of bovines were found", typeof(IEnumerable<BovineResource>))]
     public async Task<IActionResult> GetAllBovine()
     {
-        var bovines = await queryService.Handle(new GetAllBovinesQuery());
+        var bovines = await queryService.Handle(new GetAllBovinesQuery(CurrentUserId));
         var bovineResources = bovines.Select(BovineResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(bovineResources);
     }
@@ -254,10 +257,12 @@ public class StableController(
    IStableCommandService commandService,
    IStableQueryService queryService) : ControllerBase
 {
+    private int CurrentUserId => ((User)HttpContext.Items["User"]!).Id;
+
     [HttpPost]
     public async Task<IActionResult> CreateStables([FromBody] CreateStableResource resource)
     {
-        var command = CreateStableCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var command = CreateStableCommandFromResourceAssembler.ToCommandFromResource(resource) with { UserId = CurrentUserId };
         var result = await commandService.Handle(command);
         if (result is null) return BadRequest();
 
@@ -273,7 +278,7 @@ public class StableController(
     [SwaggerResponse(StatusCodes.Status200OK, "The list of stables were found", typeof(IEnumerable<StableResource>))]
     public async Task<IActionResult> GetAllStable()
     {
-        var stables = await queryService.Handle(new GetAllStablesQuery());
+        var stables = await queryService.Handle(new GetAllStablesQuery(CurrentUserId));
         var stableResources = stables.Select(StableResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(stableResources);
     }
@@ -332,10 +337,12 @@ public class AppointmentController(
     IAppointmentCommandService commandService,
     IAppointmentQueryService queryService) : ControllerBase
 {
+    private int CurrentUserId => ((User)HttpContext.Items["User"]!).Id;
+
     [HttpPost]
     public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentResource resource)
     {
-        var command = CreateAppointmentCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var command = CreateAppointmentCommandFromResourceAssembler.ToCommandFromResource(resource) with { UserId = CurrentUserId };
         var result = await commandService.Handle(command);
         if (result is null) return BadRequest();
         return CreatedAtAction(nameof(GetAppointmentById), new { id = result.Id },
@@ -346,7 +353,7 @@ public class AppointmentController(
     [SwaggerOperation(Summary = "Get all appointments", OperationId = "GetAllAppointments")]
     public async Task<IActionResult> GetAllAppointments()
     {
-        var items = await queryService.Handle(new GetAllAppointmentsQuery());
+        var items = await queryService.Handle(new GetAllAppointmentsQuery(CurrentUserId));
         return Ok(items.Select(AppointmentResourceFromEntityAssembler.ToResourceFromEntity));
     }
 
@@ -362,7 +369,7 @@ public class AppointmentController(
     [SwaggerOperation(Summary = "Get next upcoming appointment", OperationId = "GetNextAppointment")]
     public async Task<ActionResult> GetNextAppointment()
     {
-        var result = await queryService.Handle(new GetNextAppointmentQuery());
+        var result = await queryService.Handle(new GetNextAppointmentQuery(CurrentUserId));
         if (result is null) return NotFound();
         return Ok(AppointmentResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
@@ -462,10 +469,12 @@ public class FeedingPlanController(
     IFeedingPlanCommandService commandService,
     IFeedingPlanQueryService queryService) : ControllerBase
 {
+    private int CurrentUserId => ((User)HttpContext.Items["User"]!).Id;
+
     [HttpPost]
     public async Task<IActionResult> CreateFeedingPlan([FromBody] CreateFeedingPlanResource resource)
     {
-        var command = CreateFeedingPlanCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var command = CreateFeedingPlanCommandFromResourceAssembler.ToCommandFromResource(resource) with { UserId = CurrentUserId };
         var result = await commandService.Handle(command);
         if (result is null) return BadRequest();
         return CreatedAtAction(nameof(GetFeedingPlanById), new { id = result.Id },
@@ -476,7 +485,7 @@ public class FeedingPlanController(
     [SwaggerOperation(Summary = "Get all feeding plans", OperationId = "GetAllFeedingPlans")]
     public async Task<IActionResult> GetAllFeedingPlans()
     {
-        var items = await queryService.Handle(new GetAllFeedingPlansQuery());
+        var items = await queryService.Handle(new GetAllFeedingPlansQuery(CurrentUserId));
         return Ok(items.Select(FeedingPlanResourceFromEntityAssembler.ToResourceFromEntity));
     }
 

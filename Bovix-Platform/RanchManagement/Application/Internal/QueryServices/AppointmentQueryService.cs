@@ -8,11 +8,11 @@ namespace Bovix_Platform.RanchManagement.Application.Internal.QueryServices;
 public class AppointmentQueryService(IAppointmentRepository repository) : IAppointmentQueryService
 {
     public async Task<IEnumerable<Appointment>> Handle(GetAllAppointmentsQuery query) =>
-        await repository.ListAsync();
+        await repository.FindByUserIdAsync(query.UserId);
 
     public async Task<Appointment?> Handle(GetAppointmentByIdQuery query) =>
         await repository.FindByIdAsync(query.Id);
 
     public async Task<Appointment?> Handle(GetNextAppointmentQuery query) =>
-        await repository.FindNextAsync();
+        await repository.FindNextByUserIdAsync(query.UserId);
 }

@@ -7,8 +7,10 @@ namespace Bovix_Platform.RanchManagement.Domain.Repositories;
 public interface IBovineRepository : IBaseRepository<Bovine>
 {
     Task<Bovine?> FindByNameAsync(string name);
-    
+
     Task<IEnumerable<Bovine>> FindByStableIdAsync(int? stableId);
-    
+
     Task<int> CountBovinesByStableIdAsync(int stableId);
+
+    Task<IEnumerable<Bovine>> FindByUserIdAsync(int userId);
 }

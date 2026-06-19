@@ -40,6 +40,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Bovine>().Property(f => f.Lot).HasMaxLength(20);
         builder.Entity<Bovine>().Property(f => f.Status).IsRequired().HasMaxLength(20);
         builder.Entity<Bovine>().Property(f => f.WeightKg).IsRequired();
+        builder.Entity<Bovine>().Property(f => f.UserId).IsRequired();
 
         //Vaccine
         builder.Entity<Vaccine>().HasKey(f => f.Id);
@@ -54,6 +55,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Stable>().HasKey(f => f.Id);
         builder.Entity<Stable>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Stable>().Property(f => f.Limit).IsRequired();
+        builder.Entity<Stable>().Property(f => f.UserId).IsRequired();
 
         //Appointment
         builder.Entity<Appointment>().HasKey(f => f.Id);
@@ -63,6 +65,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Appointment>().Property(f => f.Lot).HasMaxLength(20);
         builder.Entity<Appointment>().Property(f => f.Status).IsRequired().HasMaxLength(20);
         builder.Entity<Appointment>().Property(f => f.Notes).HasMaxLength(500);
+        builder.Entity<Appointment>().Property(f => f.UserId).IsRequired();
 
         //ClinicalRecord
         builder.Entity<ClinicalRecord>().HasKey(f => f.Id);
@@ -81,6 +84,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<FeedingPlan>().Property(f => f.DailyRationKg).IsRequired();
         builder.Entity<FeedingPlan>().Property(f => f.AnimalCount).IsRequired();
         builder.Entity<FeedingPlan>().Property(f => f.Notes).HasMaxLength(300);
+        builder.Entity<FeedingPlan>().Property(f => f.UserId).IsRequired();
 
         //FeedingComponent (composición de cada plan)
         builder.Entity<FeedingComponent>().HasKey(f => f.Id);

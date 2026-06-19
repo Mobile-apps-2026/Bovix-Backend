@@ -89,6 +89,8 @@ public class Bovine
     [StringLength(300)]
     public string? BovineImg { get; private set; }
 
+    public int UserId { get; private set; }
+
     // Default constructor for EF Core
     private Bovine() { }
 
@@ -108,6 +110,7 @@ public class Bovine
         WeightKg = command.WeightKg;
         BovineImg = command.BovineImg;
         StableId = command.StableId;
+        UserId = command.UserId;
     }
 
     //Update Bovine

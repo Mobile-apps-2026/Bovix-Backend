@@ -1,3 +1,3 @@
 namespace Bovix_Platform.RanchManagement.Domain.Model.Queries;
 
-public record GetAllBovinesQuery();
+public record GetAllBovinesQuery(int UserId);
