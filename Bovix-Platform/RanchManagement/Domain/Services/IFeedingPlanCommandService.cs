@@ -9,4 +9,6 @@ public interface IFeedingPlanCommandService
     Task<FeedingPlan?> Handle(UpdateFeedingPlanCommand command);
     Task<FeedingPlan?> Handle(DeleteFeedingPlanCommand command);
     Task<FeedingComponent?> Handle(AddFeedingComponentCommand command);
+    Task<FeedingComponent?> Handle(UpdateFeedingComponentCommand command);
+    Task<FeedingComponent?> Handle(DeleteFeedingComponentCommand command);
 }

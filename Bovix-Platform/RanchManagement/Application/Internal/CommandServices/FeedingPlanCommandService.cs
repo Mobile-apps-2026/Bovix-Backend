@@ -46,4 +46,27 @@ public class FeedingPlanCommandService(
         await unitOfWork.CompleteAsync();
         return component;
     }
+
+    public async Task<FeedingComponent?> Handle(UpdateFeedingComponentCommand command)
+    {
+        var component = await repository.FindComponentByIdAsync(command.Id)
+            ?? throw new Exception($"FeedingComponent with ID '{command.Id}' not found.");
+        if (component.FeedingPlanId != command.FeedingPlanId)
+            throw new Exception("Component does not belong to the specified plan.");
+        component.Update(command.Name, command.Percentage, command.AmountKg);
+        repository.UpdateComponent(component);
+        await unitOfWork.CompleteAsync();
+        return component;
+    }
+
+    public async Task<FeedingComponent?> Handle(DeleteFeedingComponentCommand command)
+    {
+        var component = await repository.FindComponentByIdAsync(command.ComponentId)
+            ?? throw new Exception($"FeedingComponent with ID '{command.ComponentId}' not found.");
+        if (component.FeedingPlanId != command.FeedingPlanId)
+            throw new Exception("Component does not belong to the specified plan.");
+        repository.RemoveComponent(component);
+        await unitOfWork.CompleteAsync();
+        return component;
+    }
 }

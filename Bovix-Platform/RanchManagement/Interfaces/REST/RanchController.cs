@@ -523,4 +523,24 @@ public class FeedingPlanController(
         if (result is null) return BadRequest();
         return Ok(new FeedingComponentResource(result.Id, result.Name, result.Percentage, result.AmountKg));
     }
+
+    [HttpPut("{id}/components/{componentId}")]
+    [SwaggerOperation(Summary = "Update a component of a feeding plan", OperationId = "UpdateFeedingComponent")]
+    public async Task<IActionResult> UpdateFeedingComponent(int id, int componentId, [FromBody] UpdateFeedingComponentResource resource)
+    {
+        var command = new UpdateFeedingComponentCommand(componentId, id, resource.Name, resource.Percentage, resource.AmountKg);
+        var result = await commandService.Handle(command);
+        if (result is null) return BadRequest();
+        return Ok(new FeedingComponentResource(result.Id, result.Name, result.Percentage, result.AmountKg));
+    }
+
+    [HttpDelete("{id}/components/{componentId}")]
+    [SwaggerOperation(Summary = "Delete a component from a feeding plan", OperationId = "DeleteFeedingComponent")]
+    public async Task<IActionResult> DeleteFeedingComponent(int id, int componentId)
+    {
+        var command = new DeleteFeedingComponentCommand(componentId, id);
+        var result = await commandService.Handle(command);
+        if (result is null) return NotFound();
+        return NoContent();
+    }
 }

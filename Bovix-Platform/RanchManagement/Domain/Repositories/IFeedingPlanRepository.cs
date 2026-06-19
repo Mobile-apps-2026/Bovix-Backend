@@ -9,4 +9,7 @@ public interface IFeedingPlanRepository : IBaseRepository<FeedingPlan>
     Task<FeedingPlan?> FindByIdWithComponentsAsync(int id);
     Task<IEnumerable<FeedingPlan>> ListWithComponentsAsync();
     Task AddComponentAsync(FeedingComponent component);
+    Task<FeedingComponent?> FindComponentByIdAsync(int componentId);
+    void RemoveComponent(FeedingComponent component);
+    void UpdateComponent(FeedingComponent component);
 }

@@ -33,4 +33,11 @@ public class FeedingComponent
         AmountKg = amountKg;
         FeedingPlanId = feedingPlanId;
     }
+
+    public void Update(string name, int percentage, decimal amountKg)
+    {
+        Name = name;
+        Percentage = percentage;
+        AmountKg = amountKg;
+    }
 }

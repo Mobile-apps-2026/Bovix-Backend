@@ -34,4 +34,19 @@ public class FeedingPlanRepository(AppDbContext ctx)
     {
         await Context.Set<FeedingComponent>().AddAsync(component);
     }
+
+    public async Task<FeedingComponent?> FindComponentByIdAsync(int componentId)
+    {
+        return await Context.Set<FeedingComponent>().FindAsync(componentId);
+    }
+
+    public void RemoveComponent(FeedingComponent component)
+    {
+        Context.Set<FeedingComponent>().Remove(component);
+    }
+
+    public void UpdateComponent(FeedingComponent component)
+    {
+        Context.Set<FeedingComponent>().Update(component);
+    }
 }
