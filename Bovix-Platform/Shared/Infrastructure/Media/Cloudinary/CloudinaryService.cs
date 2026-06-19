@@ -8,13 +8,24 @@ namespace Bovix_Platform.Shared.Infrastructure.Media.Cloudinary
 {
     public class CloudinaryService : IMediaStorageService
     {
-        private readonly CloudinarySdk.Cloudinary cloudinary;
+        private CloudinarySdk.Cloudinary? _cloudinary;
+
+        private CloudinarySdk.Cloudinary Cloudinary
+        {
+            get
+            {
+                if (_cloudinary != null) return _cloudinary;
+                var url = Environment.GetEnvironmentVariable("CLOUDINARY_URL")
+                    ?? throw new InvalidOperationException("CLOUDINARY_URL is not configured.");
+                _cloudinary = new CloudinarySdk.Cloudinary(url);
+                _cloudinary.Api.Secure = true;
+                return _cloudinary;
+            }
+        }
 
         public CloudinaryService()
         {
             DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-            cloudinary = new CloudinarySdk.Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
-            cloudinary.Api.Secure = true;
         }
 
         public void UpdateFileAsync(string url, Stream fileData)
@@ -31,7 +42,7 @@ namespace Bovix_Platform.Shared.Infrastructure.Media.Cloudinary
                 Overwrite = true,
                 Format = "webp"
             };
-            cloudinary.Upload(uploadParams);
+            Cloudinary.Upload(uploadParams);
         }
 
         public string UploadFileAsync(string fileName, Stream fileData)
@@ -41,7 +52,7 @@ namespace Bovix_Platform.Shared.Infrastructure.Media.Cloudinary
                 File = new CloudinarySdk.FileDescription(fileName, fileData),
                 Format = "webp"
             };
-            var uploadResult = cloudinary.Upload(uploadParams);
+            var uploadResult = Cloudinary.Upload(uploadParams);
 
             return uploadResult.SecureUrl.ToString();
         }

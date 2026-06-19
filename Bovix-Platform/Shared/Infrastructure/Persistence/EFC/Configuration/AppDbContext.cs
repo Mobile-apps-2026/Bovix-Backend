@@ -32,11 +32,11 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Bovine>().Property(f => f.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Bovine>().Property(f => f.Name).IsRequired();
         builder.Entity<Bovine>().Property(f => f.Gender).IsRequired();
-        builder.Entity<Bovine>().Property(f => f.BirthDate).IsRequired();
-        builder.Entity<Bovine>().Property(f => f.Breed).IsRequired();
-        builder.Entity<Bovine>().Property(f => f.Location).IsRequired();
-        builder.Entity<Bovine>().Property(f => f.BovineImg).IsRequired();
-        builder.Entity<Bovine>().Property(f => f.StableId).IsRequired();
+        builder.Entity<Bovine>().Property(f => f.BirthDate).IsRequired(false);
+        builder.Entity<Bovine>().Property(f => f.Breed).IsRequired(false);
+        builder.Entity<Bovine>().Property(f => f.Location).IsRequired(false);
+        builder.Entity<Bovine>().Property(f => f.BovineImg).IsRequired(false);
+        builder.Entity<Bovine>().Property(f => f.StableId).IsRequired(false);
         builder.Entity<Bovine>().Property(f => f.Lot).HasMaxLength(20);
         builder.Entity<Bovine>().Property(f => f.Status).IsRequired().HasMaxLength(20);
         builder.Entity<Bovine>().Property(f => f.WeightKg).IsRequired();
