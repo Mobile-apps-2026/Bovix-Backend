@@ -4,7 +4,7 @@ namespace Bovix_Platform.IAM.Domain.Services
 {
     public interface IUserCommandService
     {
-        Task<string> Handle(SignUpCommand command);
-        Task<string> Handle(SignInCommand command);
+        Task<(string token, string role)> Handle(SignUpCommand command);
+        Task<(string token, string role)> Handle(SignInCommand command);
     }
 }

@@ -5,6 +5,7 @@ namespace Bovix_Platform.RanchManagement.Domain.Model.Aggregates;
 
 public class FeedingPlan
 {
+
     [Required]
     public int Id { get; private set; }
 

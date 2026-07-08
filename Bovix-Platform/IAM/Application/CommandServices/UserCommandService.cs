@@ -14,7 +14,7 @@ namespace Bovix_Platform.IAM.Application.CommandServices
         ITokenService tokenService
     ) : IUserCommandService
     {
-        public async Task<string> Handle(SignUpCommand command)
+        public async Task<(string token, string role)> Handle(SignUpCommand command)
         {
             var hashedCommand = command with { Password = hashingService.GenerateHash(command.Password) };
             var user = new User(hashedCommand);
@@ -34,17 +34,17 @@ namespace Bovix_Platform.IAM.Application.CommandServices
                 Console.WriteLine(e.Message);
             }
 
-            return tokenService.GenerateToken(user);
+            return (tokenService.GenerateToken(user), user.Role);
         }
 
-        public async Task<string> Handle(SignInCommand command)
+        public async Task<(string token, string role)> Handle(SignInCommand command)
         {
             var user = await userRepository.FindByEmailAsync(command.Email);
 
             if (user == null || !hashingService.VerifyHash(command.Password, user.Password))
                 throw new Exception("Invalid username or password");
 
-            return tokenService.GenerateToken(user);
+            return (tokenService.GenerateToken(user), user.Role);
         }
     }
 }

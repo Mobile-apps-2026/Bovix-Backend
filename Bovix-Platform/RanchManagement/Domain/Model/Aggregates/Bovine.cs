@@ -6,6 +6,7 @@ namespace Bovix_Platform.RanchManagement.Domain.Model.Aggregates;
 
 public class Bovine
 {
+
     /// <summary>
     /// Allowed status values aligned with the Bovix mobile frontend.
     /// </summary>

@@ -21,7 +21,8 @@ namespace Bovix_Platform.IAM.Infrastructure.Tokens.JWT.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role)
             }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials =

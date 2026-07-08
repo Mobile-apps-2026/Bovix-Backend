@@ -22,6 +22,10 @@ namespace Bovix_Platform.IAM.Domain.Model.Aggregates
         [EmailAddress]
         public string Email { get; private set; }
 
+        [Required]
+        [StringLength(10)]
+        public string Role { get; private set; }
+
         private User() { }
 
         public User(SignUpCommand command)
@@ -29,6 +33,7 @@ namespace Bovix_Platform.IAM.Domain.Model.Aggregates
             Username = command.Username;
             Password = command.Password;
             Email = command.Email;
+            Role = command.Role;
             if (!System.Text.RegularExpressions.Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 throw new ArgumentException("Invalid email format.", nameof(command.Email));

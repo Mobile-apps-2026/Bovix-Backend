@@ -10,7 +10,8 @@ namespace Bovix_Platform.IAM.Interfaces.REST.Transform
             return new SignUpCommand(
                 resource.Username,
                 resource.Password,
-                resource.Email
+                resource.Email,
+                resource.Role
             );
         }
     }

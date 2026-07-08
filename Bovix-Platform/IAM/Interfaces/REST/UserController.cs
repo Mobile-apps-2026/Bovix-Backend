@@ -20,11 +20,11 @@ namespace Bovix_Platform.IAM.Interfaces.REST
         public async Task<IActionResult> SignUp([FromBody] SignUpResource resource)
         {
             var command = SignUpCommandFromResourceAssembler.ToCommandFromResource(resource);
-            var result = await commandService.Handle(command);
+            var (token, role) = await commandService.Handle(command);
 
-            if (result is null) return BadRequest("User already exists");
+            if (token is null) return BadRequest("User already exists");
 
-            var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(result);
+            var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(token, role);
 
             return CreatedAtAction(nameof(SignUp), userResource);
         }
@@ -34,11 +34,11 @@ namespace Bovix_Platform.IAM.Interfaces.REST
         public async Task<ActionResult> SignIn([FromBody] SignInResource resource)
         {
             var command = SignInCommandFromResourceAssembler.ToCommandFromResource(resource);
-            var result = await commandService.Handle(command);
+            var (token, role) = await commandService.Handle(command);
 
-            if (result is null) return BadRequest("Invalid credentials.");
+            if (token is null) return BadRequest("Invalid credentials.");
 
-            var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(result);
+            var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(token, role);
 
             return Ok(userResource);
         }
