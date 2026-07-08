@@ -10,4 +10,6 @@ public interface IAppointmentRepository : IBaseRepository<Appointment>
     Task<IEnumerable<Appointment>> FindByUserIdAsync(int userId);
 
     Task<Appointment?> FindNextByUserIdAsync(int userId);
+
+    Task<IEnumerable<Appointment>> FindByVetIdAsync(int vetId);
 }

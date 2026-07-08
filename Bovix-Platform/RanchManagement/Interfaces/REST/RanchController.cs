@@ -374,6 +374,14 @@ public class AppointmentController(
         return Ok(AppointmentResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
 
+    [HttpGet("vet")]
+    [SwaggerOperation(Summary = "Get all appointments assigned to the current vet", OperationId = "GetAppointmentsByVet")]
+    public async Task<IActionResult> GetAppointmentsByVet()
+    {
+        var items = await queryService.Handle(new GetAllAppointmentsByVetIdQuery(CurrentUserId));
+        return Ok(items.Select(AppointmentResourceFromEntityAssembler.ToResourceFromEntity));
+    }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAppointment(int id, [FromBody] UpdateAppointmentResource resource)
     {

@@ -13,5 +13,10 @@ namespace Bovix_Platform.IAM.Application.QueryServices
         {
             return await userRepository.FindByIdAsync(query.Id);
         }
+
+        public async Task<IEnumerable<User>> Handle(GetUsersByRoleQuery query)
+        {
+            return await userRepository.FindAllByRoleAsync(query.Role);
+        }
     }
 }

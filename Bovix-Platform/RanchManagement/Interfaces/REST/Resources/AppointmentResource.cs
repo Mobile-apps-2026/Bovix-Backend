@@ -6,4 +6,6 @@ public record AppointmentResource(
     DateTime ScheduledAt,
     string? Lot,
     string Status,
-    string? Notes);
+    string? Notes,
+    int UserId,
+    int VetId);

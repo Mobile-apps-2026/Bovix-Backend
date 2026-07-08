@@ -15,4 +15,7 @@ public class AppointmentQueryService(IAppointmentRepository repository) : IAppoi
 
     public async Task<Appointment?> Handle(GetNextAppointmentQuery query) =>
         await repository.FindNextByUserIdAsync(query.UserId);
+
+    public async Task<IEnumerable<Appointment>> Handle(GetAllAppointmentsByVetIdQuery query) =>
+        await repository.FindByVetIdAsync(query.VetId);
 }

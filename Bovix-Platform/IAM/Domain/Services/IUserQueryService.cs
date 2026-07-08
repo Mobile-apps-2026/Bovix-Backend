@@ -6,5 +6,6 @@ namespace Bovix_Platform.IAM.Domain.Services
     public interface IUserQueryService
     {
         Task<User?> Handle(GetUserByIdQuery query);
+        Task<IEnumerable<User>> Handle(GetUsersByRoleQuery query);
     }
 }

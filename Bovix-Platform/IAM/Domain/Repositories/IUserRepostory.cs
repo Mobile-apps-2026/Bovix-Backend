@@ -6,5 +6,6 @@ namespace Bovix_Platform.IAM.Domain.Repositories
     public interface IUserRepostory : IBaseRepository<User>
     {
         Task<User?> FindByEmailAsync(string email);
+        Task<IEnumerable<User>> FindAllByRoleAsync(string role);
     }
 }

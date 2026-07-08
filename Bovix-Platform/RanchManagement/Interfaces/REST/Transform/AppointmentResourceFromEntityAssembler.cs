@@ -7,5 +7,5 @@ public static class AppointmentResourceFromEntityAssembler
 {
     public static AppointmentResource ToResourceFromEntity(Appointment entity) =>
         new(entity.Id, entity.VeterinarianName, entity.ScheduledAt,
-            entity.Lot, entity.Status, entity.Notes);
+            entity.Lot, entity.Status, entity.Notes, entity.UserId, entity.VetId);
 }

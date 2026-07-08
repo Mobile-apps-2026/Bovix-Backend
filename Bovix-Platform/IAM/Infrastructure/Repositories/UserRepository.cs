@@ -12,5 +12,10 @@ namespace Bovix_Platform.IAM.Infrastructure.Repositories
         {
             return await context.Set<User>().FirstOrDefaultAsync(u => u.Email == email);
         }
+
+        public async Task<IEnumerable<User>> FindAllByRoleAsync(string role)
+        {
+            return await context.Set<User>().Where(u => u.Role == role).ToListAsync();
+        }
     }
 }

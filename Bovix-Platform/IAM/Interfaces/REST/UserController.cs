@@ -1,5 +1,6 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using Bovix_Platform.IAM.Domain.Model.Queries;
 using Bovix_Platform.IAM.Domain.Services;
 using Bovix_Platform.IAM.Interfaces.REST.Resources;
 using Bovix_Platform.IAM.Interfaces.REST.Transform;
@@ -13,7 +14,7 @@ namespace Bovix_Platform.IAM.Interfaces.REST
     [Route("api/v1/[controller]")]
     [Produces(MediaTypeNames.Application.Json)]
     [Tags("User")]
-    public class UserController(IUserCommandService commandService) : ControllerBase
+    public class UserController(IUserCommandService commandService, IUserQueryService queryService) : ControllerBase
     {
         [HttpPost("sign-up")]
         [AllowAnonymous]
@@ -41,6 +42,14 @@ namespace Bovix_Platform.IAM.Interfaces.REST
             var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(token, role);
 
             return Ok(userResource);
+        }
+
+        [HttpGet("vets")]
+        public async Task<IActionResult> GetVets()
+        {
+            var users = await queryService.Handle(new GetUsersByRoleQuery("VET"));
+            var resources = users.Select(u => new VetResource(u.Id, u.Username, u.Email));
+            return Ok(resources);
         }
     }
 }

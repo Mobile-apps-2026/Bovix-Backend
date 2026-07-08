@@ -6,4 +6,5 @@ public record CreateAppointmentCommand(
     string? Lot,
     string? Status,
     string? Notes,
-    int UserId = 0);
+    int UserId = 0,
+    int VetId = 0);

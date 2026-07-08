@@ -31,4 +31,9 @@ public class AppointmentRepository(AppDbContext ctx)
             .OrderBy(a => a.ScheduledAt)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<Appointment>> FindByVetIdAsync(int vetId)
+    {
+        return await Context.Set<Appointment>().Where(a => a.VetId == vetId).ToListAsync();
+    }
 }

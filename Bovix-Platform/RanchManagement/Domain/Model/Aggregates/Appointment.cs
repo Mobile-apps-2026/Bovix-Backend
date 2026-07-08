@@ -30,6 +30,8 @@ public class Appointment
 
     public int UserId { get; private set; }
 
+    public int VetId { get; private set; }
+
     private Appointment() { }
 
     public Appointment(CreateAppointmentCommand command)
@@ -40,6 +42,7 @@ public class Appointment
         Status = NormalizeStatus(command.Status);
         Notes = command.Notes;
         UserId = command.UserId;
+        VetId = command.VetId;
     }
 
     public void Update(UpdateAppointmentCommand command)

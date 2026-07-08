@@ -8,4 +8,5 @@ public interface IAppointmentQueryService
     Task<IEnumerable<Appointment>> Handle(GetAllAppointmentsQuery query);
     Task<Appointment?> Handle(GetAppointmentByIdQuery query);
     Task<Appointment?> Handle(GetNextAppointmentQuery query);
+    Task<IEnumerable<Appointment>> Handle(GetAllAppointmentsByVetIdQuery query);
 }

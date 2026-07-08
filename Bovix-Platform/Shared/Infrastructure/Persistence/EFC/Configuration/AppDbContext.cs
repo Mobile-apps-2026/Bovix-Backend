@@ -25,6 +25,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<User>().Property(f => f.Username).IsRequired();
         builder.Entity<User>().Property(f => f.Password).IsRequired();
         builder.Entity<User>().Property(f => f.Email).IsRequired();
+        builder.Entity<User>().Property(f => f.Role).IsRequired().HasMaxLength(10);
 
         /* Ranch Management BC -------------------------------------------------------------------------------------- */
         //Bovine
@@ -66,6 +67,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         builder.Entity<Appointment>().Property(f => f.Status).IsRequired().HasMaxLength(20);
         builder.Entity<Appointment>().Property(f => f.Notes).HasMaxLength(500);
         builder.Entity<Appointment>().Property(f => f.UserId).IsRequired();
+        builder.Entity<Appointment>().Property(f => f.VetId).IsRequired();
 
         //ClinicalRecord
         builder.Entity<ClinicalRecord>().HasKey(f => f.Id);
