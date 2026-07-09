@@ -51,5 +51,13 @@ namespace Bovix_Platform.IAM.Interfaces.REST
             var resources = users.Select(u => new VetResource(u.Id, u.Username, u.Email));
             return Ok(resources);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = await queryService.Handle(new GetUserByIdQuery(id));
+            if (user is null) return NotFound();
+            return Ok(new VetResource(user.Id, user.Username, user.Email));
+        }
     }
 }
